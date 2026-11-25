@@ -1,0 +1,25 @@
+import CommunityPostEditView from "@/components/_views/Communities/CommunityPostEdit";
+import { getSampleCommunity } from "@/components/_views/Communities/CommunityDetail/community-detail.types";
+
+interface PageProps {
+  params: Promise<{ id: string; postId: string }>;
+}
+
+/** Menghasilkan metadata halaman sunting postingan komunitas berdasarkan ID komunitas. */
+export async function generateMetadata({ params }: PageProps) {
+  const { id } = await params;
+  const community = getSampleCommunity(id);
+
+  return {
+    title: `Sunting Postingan di ${community.name} | Tel-U Knowledge`,
+    description: `Sunting postingan Anda di ${community.name}.`,
+  };
+}
+
+/** Halaman untuk menyunting postingan pada komunitas tertentu. */
+export default async function EditCommunityPostPage({ params }: PageProps) {
+  const { id, postId } = await params;
+  const community = getSampleCommunity(id);
+
+  return <CommunityPostEditView community={community} postId={postId} />;
+}
